@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { customersServices } from "./customer.service";
+import sendResponse from "../../../shared/sendResponce";
 
 const createCustomer = async (req: Request, res: Response) => {
   try {
     const result = await customersServices.creatCustomer(req.body);
-    res.status(201).send({
+    sendResponse(res, {
+      statusCode: 201,
       success: true,
-      message: "Customer created successfully!",
+      message: "Customer created successfully",
       data: result,
     });
   } catch {
@@ -20,9 +22,10 @@ const createCustomer = async (req: Request, res: Response) => {
 const getAllCustomer = async (req: Request, res: Response) => {
   try {
     const result = await customersServices.getAllCustomer();
-    res.status(201).send({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "Customers fetched successfully",
+      message: "Customer fetched successfully",
       data: result,
     });
   } catch {
@@ -36,9 +39,10 @@ const getCustomerById = async (req: Request, res: Response) => {
   const { customerId } = req.params;
   try {
     const result = await customersServices.getCustomerByID(customerId);
-    res.status(201).send({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: "Customers fetched successfully",
+      message: "Customer fetched successfully",
       data: result,
     });
   } catch {
@@ -55,9 +59,10 @@ const customerUpadteById = async (req: Request, res: Response) => {
       customerId,
       req.body
     );
-    res.status(201).send({
+    sendResponse(res, {
+      statusCode: 201,
       success: true,
-      message: "Customers update successfully",
+      message: "Customer updated successfully",
       data: result,
     });
   } catch {
@@ -71,9 +76,11 @@ const customerDeletedById = async (req: Request, res: Response) => {
   const { customerId } = req.params;
   try {
     const result = await customersServices.customerDeletedByID(customerId);
-    res.status(201).send({
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
       message: "Customers deleted successfully",
+      data: result,
     });
   } catch {
     res.status(404).send({
