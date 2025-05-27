@@ -1,9 +1,8 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
-import { customerRoute } from "./app/modules/customer/customer.routes";
-import { bikeRoutes } from "./app/modules/bike/bike.routes";
-import { serviceRecorsRoutes } from "./app/modules/services/service.routes";
 import router from "./app/routes";
+import globalerrorHandaler from "./app/middlewair/globarErrorHandel";
+import status from "http-status";
 const app: Application = express();
 app.use(cors());
 //parser
@@ -16,7 +15,16 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 app.use("/api", router);
-// app.use("/api/customers", customerRoute);
-// app.use("/api/bikes", bikeRoutes);
-// app.use("/api/services", serviceRecorsRoutes);
+app.use(globalerrorHandaler);
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(status.NOT_FOUND).json({
+    success: false,
+    message: "data not Found In Data Base",
+    error: {
+      path: req.originalUrl,
+      message: "Your requst path is nit found !",
+    },
+  });
+});
+
 export default app;

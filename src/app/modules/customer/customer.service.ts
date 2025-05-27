@@ -11,7 +11,9 @@ const getAllCustomer = async () => {
   const result = await prisma.customer.findMany();
   return result;
 };
-const getCustomerByID = async (customerId: string) => {
+const getCustomerByID = async (
+  customerId: string
+): Promise<Customer | null> => {
   const result = await prisma.customer.findUnique({
     where: {
       customerId,

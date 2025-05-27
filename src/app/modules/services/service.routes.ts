@@ -4,7 +4,7 @@ const router = express.Router();
 router.post("/", serviceRecordControllers.createBikeService);
 router.get("/", serviceRecordControllers.getAllServiceRecord);
 router.get("/:serviceId", serviceRecordControllers.getServiceRecordById);
-router.patch(
+router.put(
   "/:serviceId/complete",
   serviceRecordControllers.ServiceRecordComplete
 );
